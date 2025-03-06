@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Reminder - เข้าสู่ระบบ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF9800;
+            --primary-dark: #F57C00;
+            --primary-light: #FFE0B2;
+            --secondary-color: #2196F3;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --danger-color: #F44336;
+            --text-primary: #333333;
+            --text-secondary: #757575;
+            --light-gray: #f5f5f5;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            background-image: linear-gradient(135deg, #f9f9f9 0%, #e6f0ff 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-container {
+            max-width: 420px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 20px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+            margin-top: 10px;
+        }
+
+        .auth-header .logo {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-tab:first-child {
+            border-top-left-radius: var(--border-radius);
+            border-bottom-left-radius: var(--border-radius);
+        }
+
+        .auth-tab:last-child {
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+        }
+
+        .auth-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Sarabun', sans-serif;
+            transition: var(--transition);
+            font-size: 16px;
+            background: #f9fafb;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.15);
+            background: white;
+        }
+
+        .form-group.row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group.row > div {
+            flex: 1;
+        }
+
+        .form-actions {
+            margin-top: 25px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: #e5e5e5;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+            color: white;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-success {
+            background-color: var(--success-color);
+        }
+
+        .alert-error {
+            background-color: var(--danger-color);
+        }
+
+        .alert.show {
+            display: flex;
+            align-items: center;
+        }
+
+        .alert i {
+            margin-right: 15px;
+            font-size: 22px;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 152, 0, 0.2);
+            border-radius: 50%;
+            border-top: 3px solid var(--primary-color);
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* รองรับการแสดงผลบนมือถือ */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 20px;
+            }
+            
+            .form-group.row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="logo"><i class="fas fa-pills"></i></div>
+            <h1>MediCare Reminder</h1>
+        </div>
+
+        <div class="alert alert-success" id="successAlert">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage"></span>
+        </div>
+
+        <div class="alert alert-error" id="errorAlert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage"></span>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="showForm('login')">เข้าสู่ระบบ</div>
+            <div class="auth-tab" onclick="showForm('register')">ลงทะเบียน</div>
+        </div>
+
+        <!-- ฟอร์มเข้าสู่ระบบ -->
+        <form id="loginForm" class="auth-form active">
+            <div class="form-group">
+                <label for="loginUsername">อีเมล</label>
+                <input type="text" id="loginUsername" required placeholder="ระบุอีเมล">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">รหัสผ่าน</label>
+                <input type="password" id="loginPassword" required placeholder="ระบุรหัสผ่าน">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
+                </button>
+            </div>
+        </form>
+
+        <!-- ฟอร์มลงทะเบียน -->
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="registerUsername">ชื่อผู้ใช้ *</label>
+                <input type="text" id="registerUsername" required placeholder="ระบุชื่อผู้ใช้">
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">อีเมล *</label>
+                <input type="email" id="registerEmail" required placeholder="ระบุอีเมล">
+            </div>
+            <div class="form-group row">
+                <div>
+                    <label for="registerFirstName">ชื่อ *</label>
+                    <input type="text" id="registerFirstName" required placeholder="ระบุชื่อ">
+                </div>
+                <div>
+                    <label for="registerLastName">นามสกุล *</label>
+                    <input type="text" id="registerLastName" required placeholder="ระบุนามสกุล">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="registerRole">ประเภทผู้ใช้ *</label>
+                <select id="registerRole" required>
+                    <option value="patient">ผู้ป่วย</option>
+                    <option value="caregiver">ผู้ดูแล</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">รหัสผ่าน *</label>
+                <input type="password" id="registerPassword" required placeholder="ระบุรหัสผ่าน (อย่างน้อย 8 ตัวอักษร)">
+            </div>
+            <div class="form-group">
+                <label for="registerConfirmPassword">ยืนยันรหัสผ่าน *</label>
+                <input type="password" id="registerConfirmPassword" required placeholder="ระบุรหัสผ่านซ้ำ">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="registerButton">
+                    <i class="fas fa-user-plus"></i> ลงทะเบียน
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+            <p>&copy; 2025 MediCare Reminder. สงวนลิขสิทธิ์.</p>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_URL = 'http://localhost:3000';
+        
+        // Token Management
+        const TokenManager = {
+            setToken(token) {
+                localStorage.setItem('medicareToken', token);
+            },
+            
+            getToken() {
+                return localStorage.getItem('medicareToken');
+            },
+            
+            removeToken() {
+                localStorage.removeItem('medicareToken');
+                localStorage.removeItem('medicareUser');
+            },
+            
+            isAuthenticated() {
+                return !!this.getToken();
+            }
+        };
+
+        // Alert Management
+        function showAlert(type, message) {
+            const alert = document.getElementById(`${type}Alert`);
+            const messageElement = document.getElementById(`${type}Message`);
+            
+            if (alert && messageElement) {
+                messageElement.textContent = message;
+                alert.classList.add('show');
+                
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                }, 5000);
+            } else {
+                console.error('Alert elements not found');
+            }
+        }
+
+        // Button Loading State
+        function setButtonLoading(buttonId, isLoading) {
+            const button = document.getElementById(buttonId);
+            
+            if (button) {
+                if (isLoading) {
+                    button.innerHTML = '<span class="loading-spinner"></span> กำลังดำเนินการ...';
+                    button.disabled = true;
+                } else {
+                    button.innerHTML = buttonId === 'loginButton' 
+                        ? '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ'
+                        : '<i class="fas fa-user-plus"></i> ลงทะเบียน';
+                    button.disabled = false;
+                }
+            }
+        }
+
+        // Form Switching
+        function showForm(formName) {
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(`${formName}Form`).classList.add('active');
+            document.querySelector(`.auth-tab:${formName === 'login' ? 'first-child' : 'last-child'}`).classList.add('active');
+        }
+
+        // Form Validation Functions
+        function validateRegistrationForm(data) {
+            const errors = [];
+
+            if (!data.username) errors.push('กรุณากรอกชื่อผู้ใช้');
+            if (!data.email) errors.push('กรุณากรอกอีเมล');
+            if (!data.first_name) errors.push('กรุณากรอกชื่อ');
+            if (!data.last_name) errors.push('กรุณากรอกนามสกุล');
+            if (data.password.length < 8) errors.push('รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร');
+            if (data.password !== data.confirm_password) errors.push('รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน');
+            
+            return errors;
+        }
+
+        // Authentication Checking
+        document.addEventListener('DOMContentLoaded', function() {
+            // ถ้ามี token ให้ redirect ไปหน้าหลัก
+            if (TokenManager.isAuthenticated()) {
+                console.log('Token exists, redirecting to dashboard');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            console.log('No token found, staying on login page');
+        });
+
+        // Registration Handler
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                username: document.getElementById('registerUsername').value.trim(),
+                email: document.getElementById('registerEmail').value.trim(),
+                first_name: document.getElementById('registerFirstName').value.trim(),
+                last_name: document.getElementById('registerLastName').value.trim(),
+                role: document.getElementById('registerRole').value,
+                password: document.getElementById('registerPassword').value,
+                confirm_password: document.getElementById('registerConfirmPassword').value
+            };
+
+            // Validate inputs
+            const validationErrors = validateRegistrationForm(formData);
+            if (validationErrors.length > 0) {
+                showAlert('error', validationErrors[0]);
+                return;
+            }
+            
+            setButtonLoading('registerButton', true);
+            
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: formData.username,
+                        email: formData.email,
+                        first_name: formData.first_name,
+                        last_name: formData.last_name,
+                        password: formData.password,
+                        role: formData.role
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'เกิดข้อผิดพลาดในการลงทะเบียน');
+                }
+                
+                showAlert('success', 'ลงทะเบียนสำเร็จ กรุณาเข้าสู่ระบบ');
+                document.getElementById('registerForm').reset();
+                showForm('login');
+            } catch (error) {
+                showAlert('error', error.message);
+            } finally {
+                setButtonLoading('registerButton', false);
+            }
+        });
+
+        // Login Handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Basic validation
+            if (!email || !password) {
+                showAlert('error', 'กรุณากรอกอีเมลและรหัสผ่าน');
+                return;
+            }
+            
+            setButtonLoading('loginButton', true);
+            
+            try {
+                // ล้าง token เก่าออกก่อน
+                TokenManager.removeToken();
+                
+                console.log('กำลังส่งข้อมูลไปยัง API:', { email });
+                
+                const response = await fetch(`${API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+                }
+                
+                console.log('ข้อมูลการตอบกลับ:', data);
+                
+                // Store token and user info
+                TokenManager.setToken(data.token);
+                localStorage.setItem('medicareUser', JSON.stringify(data.user));
+                
+                showAlert('success', 'เข้าสู่ระบบสำเร็จ กำลังนำท่านไปยังหน้าหลัก...');
+                
+                // รอสักครู่ก่อน redirect เพื่อให้เห็นข้อความสำเร็จ
+                setTimeout(() => {
+                    // Redirect to dashboard
+                    window.location.href = 'index.html';
+                }, 1500);
+            } catch (error) {
+                showAlert('error', error.message);
+            } finally {
+                setButtonLoading('loginButton', false);
+            }
+        });
+
+        // เช็คพารามิเตอร์ในการล็อกเอ้าท์
+        document.addEventListener('DOMContentLoaded', function() {
+            // ตรวจสอบว่ามีการล็อกเอ้าท์มาหรือไม่
+            const urlParams = new URLSearchParams(window.location.search);
+            const logout = urlParams.get('logout');
+            const expired = urlParams.get('expired');
+            
+            if (logout === 'true') {
+                showAlert('success', 'ออกจากระบบสำเร็จ');
+            }
+            
+            if (expired === 'true') {
+                showAlert('error', 'เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่');
+            }
+            
+            // ตรวจสอบว่ามี token อยู่หรือไม่
+            if (TokenManager.isAuthenticated()) {
+                console.log('Token exists, redirecting to dashboard');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            console.log('No token found, staying on login page');
+        });
+    </script>
+</body>
+</html>
